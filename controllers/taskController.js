@@ -5,15 +5,11 @@ exports.showAddTask = (req, res)=>{
 	res.render('addTask');
 }
 
-exports.addTask = async (req, res, next)=>{
-	try{
-		var task = await new Task({
-			task: req.body.task
-		}).save();
-	}
-	catch(e){
-		next(e);
-	}
+exports.addTask = async (req, res)=>{
+	var task = await new Task({
+		task: req.body.task
+	}).save();
+	
 	
 	res.send(`Created task: ${task.task}`);
 }
