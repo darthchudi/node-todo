@@ -1,0 +1,11 @@
+html
+	head
+		title User | Login
+	body
+		h1 Login
+		if error
+			h2=error
+		form(method="POST" action="/login")
+			input(type="text" name="matric_no" length="7" placeholder="Matric Number")
+			input(type="Password" name="password" placeholder="Password")
+			input(type="Submit" placeholder="Submit!")
