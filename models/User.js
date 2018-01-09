@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
-var userSchema = new mongoose.Schema({
+const Schema = mongoose.Schema;
+const Task = require('./Task');
+var userSchema = new Schema({
 	name: {
 		type: String,
 		required: 'Please enter a name'
@@ -13,6 +15,7 @@ var userSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	}
+	// tasks: [{type: Schema.Types.ObjectId, ref:'Task'}]
 });
 
 userSchema.methods.verifyPassword = function(password){

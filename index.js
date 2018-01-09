@@ -9,13 +9,15 @@ var session = require('express-session');
 var flash = require('connect-flash');
 var passport = require('passport');
 
+
 //Set the View Engine
-app.engine('pug', require('pug').__express)
+app.engine('pug', require('pug').__express);
 app.set('views', __dirname+'/views');
 app.set('view engine', 'pug');
 
 //Serve static files
-app.use(express.static(__dirname+'/public'));
+app.use(express.static(__dirname + '/public'));
+
 
 //Call in body parser middleware
 app.use(bodyParser.json());
@@ -40,6 +42,13 @@ app.use(passport.session());
 //Pull in flash middleware
 app.use(flash());
 
+//Pass variables to templates and all requests
+app.use((req,res, next)=>{
+	res.locals.flashes = req.flash();
+	res.locals.user = req.user || null;
+	next();
+});
+
 //Set up MongoDB connection
 mongoose.connect('mongodb://192.168.33.68:27017/todo');
 mongoose.connection.on('error', function(err){
@@ -49,8 +58,7 @@ mongoose.connection.once('open', function(){
 	console.log('MongoDB ting!');
 });
 
-//Load Routes
-// app.use('/', routes);
+//Load Routes and pass in Passport
 require('./routes/routes')(app, passport);
 
 app.set('port', 3000);

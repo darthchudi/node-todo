@@ -1,0 +1,21 @@
+html
+	head
+		title User | Home
+		link(rel="stylesheet", href="/public/home.css", type="text/css")
+	body
+		h2 Logged in as: #{user.name}
+		if locals.flashes
+			h1 #{flashes['Added']}
+
+		form(method="POST" action="/add")
+			input(type="text" name="task" placeholder="Add Task")
+			input(type="submit" value="Submit Me!")
+
+		if tasks
+			a(href='/completed') Completed
+			a(href='/completed') Completed
+			a(href='/Uncompleted') Uncompleted
+			ul
+				each task in tasks
+					li=task.task
+						a(href=`/delete/${task._id}` name='deleteButton') &nbsp;&nbsp;&nbsp; Delete

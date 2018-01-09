@@ -5,6 +5,8 @@ html
 		h1 Sign Up
 		if error
 			h1=error
+		if success
+			h1=success
 		form(method="POST" action="/signup")
 			input(type="text" name="name" placeholder="Name")
 			input(type="text" name="matric_no" length="7" placeholder="Matric Number")

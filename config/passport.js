@@ -43,7 +43,7 @@ module.exports = function(passport){
 							if(e){
 								return done(e);
 							}
-							return done(null, newUser);
+							return done(null, newUser, req.flash('success', 'Signed Up!'));
 						});
 					}
 

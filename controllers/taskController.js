@@ -1,15 +1,19 @@
 var express = require('express');
 var Task = require('../models/Task');
+var User = require('../models/User');
 
-exports.showAddTask = (req, res)=>{
-	res.render('addTask');
-}
 
 exports.addTask = async (req, res)=>{
 	var task = await new Task({
-		task: req.body.task
+		task: req.body.task,
+		user: req.user._id
 	}).save();
-	
-	
-	res.send(`Created task: ${task.task}`);
+	req.flash('Added', `Successfully added Task: ${task.task}`);
+	res.redirect('/home');
+}
+
+exports.showTasks = (req, res)=>{
+	Task.find({'user': req.user._id}).populate('user', 'name').exec(function(err, tasks){
+		res.render('home', {'tasks':tasks});
+	});
 }
