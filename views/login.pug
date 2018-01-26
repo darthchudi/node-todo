@@ -1,11 +1,22 @@
 html
 	head
 		title User | Login
+		link(rel="stylesheet" type="text/css" href="/bulma-0.6.2/css/bulma.css")
 	body
-		h1 Login
-		if error
-			h2=error
-		form(method="POST" action="/login")
-			input(type="text" name="matric_no" length="7" placeholder="Matric Number")
-			input(type="Password" name="password" placeholder="Password")
-			input(type="Submit" placeholder="Submit!")
+
+		.container.box#root
+			h1(style="font-family: Montserrat; font-size: 50px; text-align: center") Login
+			form(method="POST" action="/login")
+				.field
+					label.label Matric Number:
+					.control.is-expanded
+						input(type="text" name="matric_no" length="7" placeholder="Matric Number" v-model="name").input
+
+				.field
+					label.label Password
+					.control.is-normal
+						input(type="Password" name="password" placeholder="Password").input
+
+				.field
+					.control
+						input(type="Submit" placeholder="Submit!" value="Login").button.is-primary

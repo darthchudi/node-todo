@@ -10,6 +10,10 @@ const taskSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'User'
 	},
+	status: {
+		type: String,
+		default: 'Uncompleted'
+	},
 	created: {
 		type: Date,
 		default: Date.now

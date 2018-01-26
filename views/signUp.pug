@@ -1,14 +1,31 @@
 html
 	head
-		title User | Sign Up
+		title User | Sign UP
+		link(rel="stylesheet" type="text/css" href="/bulma-0.6.2/css/bulma.css")
+
 	body
-		h1 Sign Up
-		if error
-			h1=error
-		if success
-			h1=success
-		form(method="POST" action="/signup")
-			input(type="text" name="name" placeholder="Name")
-			input(type="text" name="matric_no" length="7" placeholder="Matric Number")
-			input(type="Password" name="password" placeholder="Password")
-			input(type="Submit" placeholder="Submit!")
+		.container.box#root
+			h1(style="font-family: Montserrat; font-size: 50px; text-align: center") Sign Up
+			form(method="POST" action="/signup" autocomplete="off")
+				.field
+					label.label Name:
+					.control.is-expanded
+						input(type="text" name="name" placeholder="Name" v-model="name").input
+				.field
+					label.label Matric Number:
+					.control.is-expanded
+						input(type="text" name="matric_no" length="7" placeholder="Matric Number" v-model="name").input
+
+				.field
+					label.label Password
+					.control.is-normal
+						input(type="Password" name="password" placeholder="Password").input
+
+				.field
+					.control
+						input(type="Submit" placeholder="Submit!").button.is-primary
+
+
+script(src="/js/app.js")
+
+				

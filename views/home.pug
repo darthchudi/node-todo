@@ -1,21 +1,26 @@
 html
 	head
 		title User | Home
-		link(rel="stylesheet", href="/public/home.css", type="text/css")
+		link(rel="stylesheet" type="text/css" href="/bulma-0.6.2/css/bulma.css")
 	body
 		h2 Logged in as: #{user.name}
 		if locals.flashes
 			h1 #{flashes['Added']}
 
-		form(method="POST" action="/add")
-			input(type="text" name="task" placeholder="Add Task")
-			input(type="submit" value="Submit Me!")
 
-		if tasks
-			a(href='/completed') Completed
-			a(href='/completed') Completed
-			a(href='/Uncompleted') Uncompleted
-			ul
-				each task in tasks
-					li=task.task
-						a(href=`/delete/${task._id}` name='deleteButton') &nbsp;&nbsp;&nbsp; Delete
+		.container#root
+
+			tabs(@content="show(item)")
+				tab(:name="'all tasks.'" selected=true)
+					all
+				tab(:name="'completed.'" selected=false)
+					complete
+				tab(:name="'uncompleted.'" selected=false)
+					uncomplete
+
+						
+			form(method="POST" action="/add" @submit.prevent="addTask")
+				input(type="text" name="task" placeholder="Add Task" v-model="task")
+				input(type="submit" value="Submit Me!")
+			
+script(src="js/app.js")

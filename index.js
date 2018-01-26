@@ -23,6 +23,9 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+//Pull in flash middleware
+app.use(flash());
+
 //Configure Passport
 require('./config/passport.js')(passport);
 
@@ -39,8 +42,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-//Pull in flash middleware
-app.use(flash());
+
 
 //Pass variables to templates and all requests
 app.use((req,res, next)=>{
@@ -54,12 +56,15 @@ mongoose.connect('mongodb://192.168.33.68:27017/todo');
 mongoose.connection.on('error', function(err){
 	console.log('Error: '+err.message);
 });
+
 mongoose.connection.once('open', function(){
-	console.log('MongoDB ting!');
+	console.log('MongoDB is up and running!');
 });
 
 //Load Routes and pass in Passport
 require('./routes/routes')(app, passport);
+
+console.log("hey");
 
 app.set('port', 3000);
 const server = app.listen(app.get('port'), ()=>{

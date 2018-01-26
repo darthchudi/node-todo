@@ -4,13 +4,14 @@ var asyncHandler = require('../handlers/asyncHandler');
 var middleware = require('../handlers/middleware.js');
 
 module.exports = (router, passport)=>{
+	/* Routes for Handling User login and registeration */
+
 	router.get('/signup', middleware.alreadyLoggedIn, userController.showSignup);
 
 	router.post('/signup', passport.authenticate('local-signup', {
 		successRedirect: '/home',
-		failureRedirect: '/signup',
+		failureRedirect: '/test',
 		failureFlash: true,
-		successFlash: true
 	}));
 
 	router.get('/login', middleware.alreadyLoggedIn, (req, res)=>{
@@ -27,16 +28,34 @@ module.exports = (router, passport)=>{
 
 	router.get('/logout', (req, res)=>{
 		req.logout();
-		res.redirect('/');
+		res.redirect('/login');
 	});
 
 	router.get('/test', (req, res)=>{
-		console.log(req.session);
+		console.log(req.flash('error')[0]);
 		res.send(req.isAuthenticated());
 	});
 
-	router.get('/home', middleware.isLoggedIn, taskController.showTasks);
+	/* Routes for handling tasks */
+
+
+	router.get('/home', middleware.isLoggedIn, taskController.homeView);
 
 	router.post('/add', middleware.isLoggedIn, asyncHandler(taskController.addTask));
+
+	router.post('/delete', asyncHandler(taskController.deleteTask));
+
+	router.post('/complete', asyncHandler(taskController.completeTask));
+
+	router.get('/tasks/all', asyncHandler(taskController.getAll));
+
+	router.get('/tasks/completed', asyncHandler(taskController.getCompleted));
+
+	router.get('/tasks/uncompleted', asyncHandler(taskController.getUncompleted));
+
+
+	
+
+	
 }
 

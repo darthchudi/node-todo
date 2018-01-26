@@ -31,7 +31,7 @@ module.exports = function(passport){
 					}
 
 					if(user){
-						return done(null, false, req.flash('error', 'Matric Number exists already'));
+						return done(null, false, {error: 'Matric Number exists already'});
 					}
 
 					if(!user){
